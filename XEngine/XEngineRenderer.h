@@ -5,6 +5,17 @@
 
 using namespace std;
 
+namespace align {
+	enum AXIS {
+		CENTER,
+		LEFT,
+		RIGHT,
+		TOP,
+		BOTTOM,
+	};
+}
+
+using namespace align;
 
 class XEngineRenderer
 {
@@ -15,13 +26,21 @@ private:
 	queue<PLANE2D> renderQueue_;
 	vector<PLANE2D> renderList_;
 	PLANE2D temp;
+	RECT mRect;
+
+	int mWidth;
+	int mHeight;
+
 public:
 	void Init(HWND hWnd, HDC mDC);
 	void Render();
 	void Release();
 
-	void Draw2DPlane(PLANE2D plane_);
 
+	void DrawLine(PARMLINE2D line_);
+	void Draw2DPlane(PLANE2D plane_, VECTOR2D pos);
+	
+	void DrawGizmos(AXIS Center);
 	XEngineRenderer();
 	~XEngineRenderer();
 };

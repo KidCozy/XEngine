@@ -2,10 +2,10 @@
 
 typedef struct VECTOR2D_TYP {
 	union {
-		float M[2];
+		int M[2];
 		struct {
-			float x;
-			float y;
+			int x;
+			int y;
 		};
 	};
 } VECTOR2D, POINT2D, *LPVECTOR2D, *LPPOINT2D;
