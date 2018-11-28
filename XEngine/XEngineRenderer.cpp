@@ -3,16 +3,20 @@
 
 using namespace align;
 
+void XEngineRenderer::SetParams() {
+	temp.p0 = { mWidth / 2,mHeight / 2 };
+	pTemp = &temp;
+}
+
 void XEngineRenderer::Init(HWND hWnd, HDC DC) {
 	mDC = DC;
 	mHwnd = hWnd;
-	temp.p0.x = 500;
-	temp.p0.y = 500;
 
 	GetClientRect(hWnd, &mRect);
 
 	mWidth = mRect.right;
 	mHeight = mRect.bottom;
+	
 }
 
 
@@ -20,13 +24,12 @@ void XEngineRenderer::Init(HWND hWnd, HDC DC) {
 void XEngineRenderer::Render()
 {
 	DrawGizmos(CENTER);
-
-	Draw2DPlane(temp, { 600,600 });
+	
+	Draw2DPlane(temp);
 	
 }
 
-void XEngineRenderer::Release()
-{
+void XEngineRenderer::Release() {
 }
 
 void XEngineRenderer::DrawLine(PARMLINE2D line_) {
@@ -37,11 +40,6 @@ void XEngineRenderer::DrawLine(PARMLINE2D line_) {
 void XEngineRenderer::DrawGizmos(AXIS Center) {
 	
 	PARMLINE2D horizontal, vertical;
-	PARMLINE2D temp;
-
-	temp.p0 = { 0,0 };
-	temp.p1 = { mWidth,mHeight };
-
 
 	horizontal.p0 = { 0, mHeight / 2 };
 	horizontal.p1 = { mWidth, mHeight / 2 };
@@ -49,13 +47,13 @@ void XEngineRenderer::DrawGizmos(AXIS Center) {
 	vertical.p0 = { mWidth / 2, 0 };
 	vertical.p1 = { mWidth / 2 , mHeight };
 
-	DrawLine(temp);
+	
 	DrawLine(horizontal);
 	DrawLine(vertical);
 }
 
 
-void XEngineRenderer::Draw2DPlane(PLANE2D plane_, VECTOR2D pos)
+void XEngineRenderer::Draw2DPlane(PLANE2D plane_)
 {
 	PARMLINE2D E[3];
 	int size = 25;
