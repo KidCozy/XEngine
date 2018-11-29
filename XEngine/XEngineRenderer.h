@@ -33,17 +33,20 @@ private:
 
 public:
 
-	LPPLANE2D pTemp;
-
 	void SetParams();
 	void Init(HWND hWnd, HDC mDC);
 	void Render();
 	void Release();
 
 
+	void RayFill(HWND hWnd, HDC mDC, COLORREF bgColor, VECTOR2D top, VECTOR2D bottom);
+
 	void DrawLine(PARMLINE2D line_);
 	void Draw2DPlane(PLANE2D plane_);
-	
+	void Draw2DTriangle(TRIANGLE2D tri_);
+	void Draw2DSquare(SQUARE2D sqr_);
+
+
 	void DrawGizmos(AXIS Center);
 	XEngineRenderer();
 	~XEngineRenderer();

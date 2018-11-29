@@ -4,8 +4,7 @@
 using namespace align;
 
 void XEngineRenderer::SetParams() {
-	temp.p0 = { mWidth / 2,mHeight / 2 };
-	pTemp = &temp;
+	temp.p0 = { mWidth/2,mHeight/2 };
 }
 
 void XEngineRenderer::Init(HWND hWnd, HDC DC) {
@@ -23,13 +22,55 @@ void XEngineRenderer::Init(HWND hWnd, HDC DC) {
 
 void XEngineRenderer::Render()
 {
-	DrawGizmos(CENTER);
+	//DrawGizmos(CENTER);
 	
-	Draw2DPlane(temp);
+	Draw2DPlane({ mWidth / 2,mHeight / 2 });
+
+	//RayFill(mHwnd, mDC, RGB(255, 255, 255));
 	
 }
 
 void XEngineRenderer::Release() {
+}
+
+void XEngineRenderer::RayFill(HWND hWnd, HDC mDC, COLORREF bgColor, VECTOR2D top, VECTOR2D bottom) {
+
+	// bgColor = COLOR_BLACK;
+
+	int count = 0;
+
+	COLORREF ref, borderColor;
+
+	borderColor = RGB(0, 0, 0);
+			//cout << ref << endl;
+	for (int i = 0; i < mWidth; i++) {
+		ref = GetPixel(mDC, i, mHeight / 2);
+		if (ref == borderColor)
+		{
+			count++;
+			break;
+		}
+	}
+
+	while (count % 2 != 0) {
+
+	}
+
+	//for(int j = top.x)
+			//ref = GetPixel(mDC, i, j);
+			//if (count % 2 != 0 && count != 0)
+			//{
+			//	if (ref == bgColor) { // isEmpty
+			//		SetPixel(mDC, i, j, RGB(0, 0, 0));
+			//	}
+
+			//}
+			//
+			//else {
+			//	if(ref == borderColor)
+			//		count++;
+			//}
+	
 }
 
 void XEngineRenderer::DrawLine(PARMLINE2D line_) {
@@ -65,6 +106,17 @@ void XEngineRenderer::Draw2DPlane(PLANE2D plane_)
 	for (int i = 0; i < 3; i++) {
 		DrawLine(E[i]);
 	}
+}
+
+void XEngineRenderer::Draw2DTriangle(TRIANGLE2D tri_) {
+	
+
+
+}
+
+void XEngineRenderer::Draw2DSquare(SQUARE2D sqr_) {
+	
+
 }
 
 XEngineRenderer::XEngineRenderer()

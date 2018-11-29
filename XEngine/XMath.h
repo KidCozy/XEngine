@@ -6,6 +6,25 @@
 
 //------------------------------------------------------------//
 
+
+typedef struct TRIANGLE2D {
+	union {
+		int M[3];
+		struct {
+			int p0, p1, p2;
+		};
+	};
+};
+
+typedef struct SQUARE2D {
+	union {
+		int M[4];
+		struct {
+			int p0, p2, p3, p4;
+		};
+	};
+};
+
 //-------------------------연산자 오버로딩---------------------//
 
 
