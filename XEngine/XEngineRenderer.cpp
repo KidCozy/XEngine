@@ -33,13 +33,15 @@ void XEngineRenderer::Render()
 void XEngineRenderer::Release() {
 }
 
-void XEngineRenderer::RayFill(HWND hWnd, HDC mDC, COLORREF bgColor, VECTOR2D top, VECTOR2D bottom) {
+void XEngineRenderer::RayFill(HWND hWnd, HDC mDC, COLORREF bgColor) {
 
 	// bgColor = COLOR_BLACK;
 
 	int count = 0;
 
 	COLORREF ref, borderColor;
+
+
 
 	borderColor = RGB(0, 0, 0);
 			//cout << ref << endl;
@@ -55,6 +57,9 @@ void XEngineRenderer::RayFill(HWND hWnd, HDC mDC, COLORREF bgColor, VECTOR2D top
 	while (count % 2 != 0) {
 
 	}
+
+
+
 
 	//for(int j = top.x)
 			//ref = GetPixel(mDC, i, j);

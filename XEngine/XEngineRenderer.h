@@ -39,7 +39,7 @@ public:
 	void Release();
 
 
-	void RayFill(HWND hWnd, HDC mDC, COLORREF bgColor, VECTOR2D top, VECTOR2D bottom);
+	void RayFill(HWND hWnd, HDC mDC, COLORREF bgColor);
 
 	void DrawLine(PARMLINE2D line_);
 	void Draw2DPlane(PLANE2D plane_);
