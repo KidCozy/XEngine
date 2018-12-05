@@ -26,14 +26,14 @@ void XEngineRenderer::Render()
 	
 	Draw2DPlane({ mWidth / 2,mHeight / 2 });
 
-	//RayFill(mHwnd, mDC, RGB(255, 255, 255));
+	RayFill(mHwnd, mDC, RGB(255, 255, 255), { mWidth / 2,mHeight / 2 });
 	
 }
 
 void XEngineRenderer::Release() {
 }
 
-void XEngineRenderer::RayFill(HWND hWnd, HDC mDC, COLORREF bgColor) {
+void XEngineRenderer::RayFill(HWND hWnd, HDC mDC, COLORREF bgColor, POINT2D axis) {
 
 	// bgColor = COLOR_BLACK;
 
@@ -41,40 +41,9 @@ void XEngineRenderer::RayFill(HWND hWnd, HDC mDC, COLORREF bgColor) {
 
 	COLORREF ref, borderColor;
 
-
-
 	borderColor = RGB(0, 0, 0);
-			//cout << ref << endl;
-	for (int i = 0; i < mWidth; i++) {
-		ref = GetPixel(mDC, i, mHeight / 2);
-		if (ref == borderColor)
-		{
-			count++;
-			break;
-		}
-	}
-
-	while (count % 2 != 0) {
-
-	}
 
 
-
-
-	//for(int j = top.x)
-			//ref = GetPixel(mDC, i, j);
-			//if (count % 2 != 0 && count != 0)
-			//{
-			//	if (ref == bgColor) { // isEmpty
-			//		SetPixel(mDC, i, j, RGB(0, 0, 0));
-			//	}
-
-			//}
-			//
-			//else {
-			//	if(ref == borderColor)
-			//		count++;
-			//}
 	
 }
 
@@ -98,6 +67,25 @@ void XEngineRenderer::DrawGizmos(AXIS Center) {
 	DrawLine(vertical);
 }
 
+
+void XEngineRenderer::DrawLineByBresenHam(POINT2D from, POINT2D to) {
+
+	// 1. x와 y 각각의 변화량을 구한다.
+	int W = abs(from.x - to.x);
+	int H = abs(from.y - to.y);
+
+	int b = 0;
+
+	int yF = H / W + b;
+	int xF = 0;
+
+	b = to.y - (H / W)*to.x;
+
+	yF = ((H / W) * xF) + to.y - (H / W)*to.x;
+
+		
+
+}
 
 void XEngineRenderer::Draw2DPlane(PLANE2D plane_)
 {

@@ -39,10 +39,11 @@ public:
 	void Release();
 
 
-	void RayFill(HWND hWnd, HDC mDC, COLORREF bgColor);
+	void RayFill(HWND hWnd, HDC mDC, COLORREF bgColor, POINT2D y);
 
 	void DrawLine(PARMLINE2D line_);
 	void Draw2DPlane(PLANE2D plane_);
+	void Draw2DLineByBresenHam(POINT2D from, POINT2D to);
 	void Draw2DTriangle(TRIANGLE2D tri_);
 	void Draw2DSquare(SQUARE2D sqr_);
 
