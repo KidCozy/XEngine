@@ -19,6 +19,11 @@ MATRIX CMProjectionMatrix = {
 	0,0,0,0,
 };
 
+MATRIX_TYP operator*(MATRIX_TYP p1, VECTOR3D p2) {
+	MATRIX_TYP retVal;
+
+
+}
 
 MATRIX_TYP operator*(MATRIX_TYP p1, MATRIX_TYP p2) {
 
@@ -58,6 +63,11 @@ MATRIX LocalToWorldMatrix(MATRIX local_)
 	return world_;
 	
 }
+
+void Translate(LPTRANSFORM target, VECTOR3D offset_) {
+	
+}
+
 
 void DrawMatrix(MATRIX mat)
 {

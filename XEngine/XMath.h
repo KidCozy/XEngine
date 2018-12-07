@@ -101,6 +101,10 @@ typedef struct MATRIX_TYP {
 // 행렬 변환 함수
 MATRIX LocalToWorldMatrix(MATRIX local_);
 
+//------------------------------------------------------------//
+// 행렬 변환 함수
+void Translate(LPTRANSFORM, VECTOR3D);
+void Translate(float, float, float);
 
 //------------------------------------------------------------//
 // 출력 관련 

@@ -7,27 +7,24 @@ void XEngineRenderer::SetParams() {
 	temp.p0 = { mWidth/2,mHeight/2 };
 }
 
-void XEngineRenderer::Init(HWND hWnd, HDC DC) {
+void XEngineRenderer::Init(HDC DC) {
 	mDC = DC;
-	mHwnd = hWnd;
 
-	GetClientRect(hWnd, &mRect);
-
+	GetClientRect(mHwnd, &mRect);
 	mWidth = mRect.right;
 	mHeight = mRect.bottom;
 	
+
 }
 
 
 
 void XEngineRenderer::Render()
 {
-	//DrawGizmos(CENTER);
-	
 	Draw2DPlane({ mWidth / 2,mHeight / 2 });
-
-	RayFill(mHwnd, mDC, RGB(255, 255, 255), { mWidth / 2,mHeight / 2 });
 	
+	RayFill(mHwnd, mDC, RGB(255, 255, 255), { mWidth / 2,mHeight / 2 });
+	Draw2DPlane({ 100,100 });
 }
 
 void XEngineRenderer::Release() {
@@ -74,15 +71,20 @@ void XEngineRenderer::DrawLineByBresenHam(POINT2D from, POINT2D to) {
 	int W = abs(from.x - to.x);
 	int H = abs(from.y - to.y);
 
+	int dest = H / W;
 	int b = 0;
+	for (int xi = from.x; xi < to.x; xi++) {
+		for (int yi = from.y; yi < to.y; yi++) {
 
-	int yF = H / W + b;
-	int xF = 0;
+			int p = dest * xi + b - yi;
+			int p2 = yi - dest * xi - b;
 
-	b = to.y - (H / W)*to.x;
-
-	yF = ((H / W) * xF) + to.y - (H / W)*to.x;
-
+			if (p-p2 < 0) {
+				
+			}
+		}
+		
+	}
 		
 
 }
@@ -114,6 +116,11 @@ void XEngineRenderer::Draw2DSquare(SQUARE2D sqr_) {
 
 XEngineRenderer::XEngineRenderer()
 {
+}
+
+XEngineRenderer::XEngineRenderer(HWND hWnd)
+{
+	mHwnd = hWnd;
 }
 
 

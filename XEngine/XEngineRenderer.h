@@ -1,7 +1,10 @@
 #pragma once
+
 #include"XMath.h"
+
 #include<queue>
 #include<vector>
+#include<Windows.h>
 
 using namespace std;
 
@@ -34,7 +37,7 @@ private:
 public:
 
 	void SetParams();
-	void Init(HWND hWnd, HDC mDC);
+	void Init(HDC DC);
 	void Render();
 	void Release();
 
@@ -43,13 +46,23 @@ public:
 
 	void DrawLine(PARMLINE2D line_);
 	void Draw2DPlane(PLANE2D plane_);
-	void Draw2DLineByBresenHam(POINT2D from, POINT2D to);
+	void DrawLineByBresenHam(POINT2D from, POINT2D to);
 	void Draw2DTriangle(TRIANGLE2D tri_);
 	void Draw2DSquare(SQUARE2D sqr_);
 
+	void Translate(VECTOR3D offset_);
+	void Translate(float x, float y, float z);
+
 
 	void DrawGizmos(AXIS Center);
+	void SwapChain();
+
+	int GetWidth() { return mWidth; }
+	int GetHeight() { return mHeight; }
+	
+	
 	XEngineRenderer();
+	XEngineRenderer(HWND hWnd);
 	~XEngineRenderer();
 };
 
