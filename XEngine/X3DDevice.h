@@ -1,14 +1,34 @@
 #pragma once
-#include"XEngineRenderer.h"
+#include<Windows.h>
+#include"PrimeEngine.h"
+
+
+extern BYTE* mScreenBits;
+extern ULONG mCurrentColor;
+
 class X3DDevice
 {
 private:
-	int* mZBuffer;
-	XEngineRenderer* mRenderer;
+	float* mZBuffer;
+
+	HDC hScreenDC, hMemoryDC;
+	HBITMAP hPrimaryBit, hDIBitmap;
+	
 
 public:
 	X3DDevice();
 	X3DDevice(HWND hWnd, HDC mDC);
+
+	void Init(HWND hWnd);
+	void Release(HWND hWnd);
+
+	void SetColor(BYTE R, BYTE G, BYTE B);
+
+	void Clear();
+	void SwapChain();
+	void DrawFrameRate();
+	
+	
 	~X3DDevice();
 
 

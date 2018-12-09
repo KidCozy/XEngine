@@ -1,129 +1,159 @@
 #include "stdafx.h"
 #include "XEngineRenderer.h"
 
+#define DrawBH DrawLineByBresenHam(POINT2D from, POINT2D to);
+
 using namespace align;
+
+ULONG mCurrentColor;
 
 void XEngineRenderer::SetParams() {
 	temp.p0 = { mWidth/2,mHeight/2 };
+
+	// 삼각형 버텍스 정의
+	//tri_.M[0] = { 100,100 };
+	//tri_.M[1] = { 100,150 };
+	//tri_.M[2] = { 150,150 };
 }
 
-void XEngineRenderer::Init(HDC DC) {
-	mDC = DC;
+void XEngineRenderer::Init(HWND hWnd) {
+	SetParams();
+	mDevice_.Init(hWnd);
 
-	GetClientRect(mHwnd, &mRect);
+	GetClientRect(hWnd, &mRect);
+
 	mWidth = mRect.right;
 	mHeight = mRect.bottom;
-	
-
+	mIsRender = TRUE;
 }
 
 
-
+// 렌더 구간
 void XEngineRenderer::Render()
 {
-	Draw2DPlane({ mWidth / 2,mHeight / 2 });
-	
-	RayFill(mHwnd, mDC, RGB(255, 255, 255), { mWidth / 2,mHeight / 2 });
-	Draw2DPlane({ 100,100 });
-}
+	mDevice_.SetColor(255, 255, 255);
 
-void XEngineRenderer::Release() {
-}
-
-void XEngineRenderer::RayFill(HWND hWnd, HDC mDC, COLORREF bgColor, POINT2D axis) {
-
-	// bgColor = COLOR_BLACK;
-
-	int count = 0;
-
-	COLORREF ref, borderColor;
-
-	borderColor = RGB(0, 0, 0);
-
-
-	
-}
-
-void XEngineRenderer::DrawLine(PARMLINE2D line_) {
-	MoveToEx(mDC, line_.p0.x, line_.p0.y, NULL);
-	LineTo(mDC, line_.p1.x, line_.p1.y);
-}
-
-void XEngineRenderer::DrawGizmos(AXIS Center) {
-	
-	PARMLINE2D horizontal, vertical;
-
-	horizontal.p0 = { 0, mHeight / 2 };
-	horizontal.p1 = { mWidth, mHeight / 2 };
-
-	vertical.p0 = { mWidth / 2, 0 };
-	vertical.p1 = { mWidth / 2 , mHeight };
-
-	
-	DrawLine(horizontal);
-	DrawLine(vertical);
-}
-
-
-void XEngineRenderer::DrawLineByBresenHam(POINT2D from, POINT2D to) {
-
-	// 1. x와 y 각각의 변화량을 구한다.
-	int W = abs(from.x - to.x);
-	int H = abs(from.y - to.y);
-
-	int dest = H / W;
-	int b = 0;
-	for (int xi = from.x; xi < to.x; xi++) {
-		for (int yi = from.y; yi < to.y; yi++) {
-
-			int p = dest * xi + b - yi;
-			int p2 = yi - dest * xi - b;
-
-			if (p-p2 < 0) {
-				
-			}
-		}
-		
+	for (int i = -mWidth; i < mWidth; i++) {
+		PixelOut(i, 0);
+		PixelOut(0, i);
 	}
-		
-
+	
+	
+	mDevice_.SwapChain();
 }
 
-void XEngineRenderer::Draw2DPlane(PLANE2D plane_)
+void XEngineRenderer::Release(HWND hWnd)
 {
-	PARMLINE2D E[3];
-	int size = 25;
-
-	E[0] = { {plane_.p0.x ,plane_.p0.y - size},{plane_.p0.x + size,plane_.p0.y + size} };
-	E[1] = { {plane_.p0.x + size,plane_.p0.y + size},{plane_.p0.x - size,plane_.p0.y + size} };
-	E[2] = { {plane_.p0.x - size,plane_.p0.y + size},{plane_.p0.x ,plane_.p0.y - size} };
-	
-	for (int i = 0; i < 3; i++) {
-		DrawLine(E[i]);
-	}
+	mDevice_.Release(hWnd);
+	this->~XEngineRenderer();
 }
 
-void XEngineRenderer::Draw2DTriangle(TRIANGLE2D tri_) {
-	
+void XEngineRenderer::PixelOut(int x, int y)
+{
+	if (!IsInArea(x, y)) return;
 
-
+	ULONG* dest = (ULONG*)mScreenBits;
+	DWORD offset = mWidth * mHeight / 2 + mWidth / 2 + x + mWidth * -y;
+	*(dest + offset) = mCurrentColor;
 }
 
-void XEngineRenderer::Draw2DSquare(SQUARE2D sqr_) {
+bool XEngineRenderer::IsInArea(int x, int y)
+{
 	
-
+	return (abs(x) < (mWidth / 2)) && (abs(y) < mHeight / 2);
 }
 
 XEngineRenderer::XEngineRenderer()
 {
 }
 
-XEngineRenderer::XEngineRenderer(HWND hWnd)
-{
-	mHwnd = hWnd;
-}
-
-
 XEngineRenderer::~XEngineRenderer()
 {
 }
+
+
+
+
+
+//
+//void XEngineRenderer::RayFill(HWND hWnd, HDC mDC, COLORREF bgColor, POINT2D axis) {
+//
+//	// bgColor = COLOR_BLACK;
+//
+//	int count = 0;
+//
+//	COLORREF borderColor;
+//
+//	borderColor = RGB(0, 0, 0);
+//
+//
+//	
+//}
+//
+//void XEngineRenderer::DrawLine(PARMLINE2D line_) {
+//	MoveToEx(mDC, line_.p0.x, line_.p0.y, NULL);
+//	LineTo(mDC, line_.p1.x, line_.p1.y);
+//}
+//
+//void XEngineRenderer::DrawGizmos(AXIS Center) {
+//	
+//	PARMLINE2D horizontal, vertical;
+//
+//	horizontal.p0 = { 0, mHeight / 2 };
+//	horizontal.p1 = { mWidth, mHeight / 2 };
+//
+//	vertical.p0 = { mWidth / 2, 0 };
+//	vertical.p1 = { mWidth / 2 , mHeight };
+//
+//	
+//	DrawLine(horizontal);
+//	DrawLine(vertical);
+//}
+//
+//void XEngineRenderer::DrawLineByBresenHam(POINT2D from, POINT2D to, COLORREF color) {
+//
+//	// 1. x와 y 각각의 변화량을 구한다.
+//	int W = from.x - to.x;
+//	int H = from.y - to.y;
+//
+//	int p = 2 * H - W;
+//
+//	while (from.x <= to.x) {
+//		if (p > 0)
+//		{
+//			SetPixel(mDC, from.x, from.y, color);
+//			from.y++;
+//			p = p + 2 * H - 2 * W;
+//		}
+//		else
+//		{
+//			SetPixel(mDC, from.x, from.y,color);
+//			from.y++;
+//			p = p + 2 * H;
+//		}
+//		from.x++;
+//	}
+//		
+//
+//}
+//
+//void XEngineRenderer::Draw2DPlane(PLANE2D plane_)
+//{
+//	PARMLINE2D E[3];
+//	int size = 25;
+//
+//	E[0] = { {plane_.p0.x ,plane_.p0.y - size},{plane_.p0.x + size,plane_.p0.y + size} };
+//	E[1] = { {plane_.p0.x + size,plane_.p0.y + size},{plane_.p0.x - size,plane_.p0.y + size} };
+//	E[2] = { {plane_.p0.x - size,plane_.p0.y + size},{plane_.p0.x ,plane_.p0.y - size} };
+//	
+//	for (int i = 0; i < 3; i++) {
+//		DrawLine(E[i]);
+//	}
+//}
+//
+//
+//void XEngineRenderer::Draw2DSquare(SQUARE2D sqr_) {
+//	
+//
+//}
+//

@@ -13,6 +13,18 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Renderer">
+      <UniqueIdentifier>{b0f0febd-729f-42e0-aac8-717d97cf7d4f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Renderer\Filler">
+      <UniqueIdentifier>{ede79547-8ac2-454c-80f0-cdfbd5fbabba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Definitions">
+      <UniqueIdentifier>{86fbf572-c82a-4107-975c-1bde0799a9ac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core">
+      <UniqueIdentifier>{5ea7813c-f8b5-4904-b58a-f3b84d87a465}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -24,28 +36,40 @@
     <ClInclude Include="Resource.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="XEngine.h">
-      <Filter>헤더 파일</Filter>
+    <ClInclude Include="XEngineRenderer.h">
+      <Filter>Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="PrimeFiller.h">
+      <Filter>Renderer\Filler</Filter>
     </ClInclude>
     <ClInclude Include="XMath.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>Definitions</Filter>
     </ClInclude>
-    <ClInclude Include="XEngineRenderer.h">
-      <Filter>헤더 파일</Filter>
+    <ClInclude Include="X3DDevice.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="PrimeEngine.h">
+      <Filter>Core</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="XEngine.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="XEngineRenderer.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="PrimeFiller.cpp">
+      <Filter>Renderer\Filler</Filter>
     </ClCompile>
     <ClCompile Include="XMath.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>Definitions</Filter>
+    </ClCompile>
+    <ClCompile Include="X3DDevice.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="PrimeEngine.cpp">
+      <Filter>Core</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

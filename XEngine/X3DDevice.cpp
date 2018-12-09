@@ -1,22 +1,69 @@
 #include "X3DDevice.h"
 
+BYTE* mScreenBits;
+
 X3DDevice::X3DDevice(HWND hWnd, HDC mDC) {
-	mRenderer = new XEngineRenderer(hWnd);
-	mRenderer->Init(mDC);
-	int bufferSize = mRenderer->GetHeight * mRenderer->GetWidth();
-	mZBuffer = new int[bufferSize];
-
-}
-
-X3DDevice::X3DDevice()
-{
-
-	
-	
-
+//	int bufferSize = mRenderer->GetHeight() * mRenderer->GetWidth();
+//	mZBuffer = new float[bufferSize];
 }
 
 
-X3DDevice::~X3DDevice()
+X3DDevice::X3DDevice() {
+
+}
+
+void X3DDevice::Init(HWND hWnd) {
+
+
+	hScreenDC = GetDC(hWnd);
+	hMemoryDC = CreateCompatibleDC(hScreenDC);
+
+	BITMAPINFO bitInfo;
+	memset(&bitInfo, 0, sizeof(BITMAPINFO));
+
+	bitInfo.bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
+	bitInfo.bmiHeader.biWidth = mWidth;
+	bitInfo.bmiHeader.biHeight = -mHeight;
+
+	bitInfo.bmiHeader.biPlanes = 1;
+	bitInfo.bmiHeader.biBitCount = 32;
+	bitInfo.bmiHeader.biCompression = BI_RGB;
+
+	hDIBitmap = CreateDIBSection(hMemoryDC, &bitInfo, DIB_RGB_COLORS, (void**)&mScreenBits, NULL, 0);
+	hPrimaryBit = (HBITMAP)SelectObject(hMemoryDC, hDIBitmap);
+
+
+}
+
+void X3DDevice::Release(HWND hWnd) {
+
+	mIsRender = FALSE;
+
+	DeleteObject(hPrimaryBit);
+	DeleteObject(hDIBitmap);
+	ReleaseDC(hWnd, hScreenDC);
+	ReleaseDC(hWnd, hMemoryDC);
+}
+
+void X3DDevice::SetColor(BYTE R, BYTE G, BYTE B)
 {
+	mCurrentColor = RGB(R, G, B);
+}
+
+
+void X3DDevice::Clear()
+{
+}
+
+void X3DDevice::SwapChain() {
+	BitBlt(hScreenDC, 0, 0, mWidth, mHeight, hMemoryDC, 0, 0, SRCCOPY);
+}
+
+void X3DDevice::DrawFrameRate()
+{
+	wchar_t wszText[512] = { 0 };
+//	swprintf(wszText, 512, L"Frame Rate : %f", )
+}
+
+X3DDevice::~X3DDevice(){
 }
