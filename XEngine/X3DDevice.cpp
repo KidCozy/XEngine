@@ -1,5 +1,5 @@
 #include "X3DDevice.h"
-
+#include"stdafx.h"
 BYTE* mScreenBits;
 
 X3DDevice::X3DDevice(HWND hWnd, HDC mDC) {
@@ -65,8 +65,6 @@ void X3DDevice::SwapChain() {
 
 void X3DDevice::DrawFrameRate()
 {
-	wchar_t wszText[512] = { 0 };
-//	swprintf(wszText, 512, L"Frame Rate : %f", )
 }
 
 X3DDevice::~X3DDevice(){

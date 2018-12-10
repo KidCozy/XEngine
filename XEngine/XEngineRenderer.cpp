@@ -30,8 +30,10 @@ void XEngineRenderer::Render()
 	mDevice_.SetColor(255, 0, 0);
 
 	Clear();
-
-	
+	//RayFill();
+	mDevice_.SetColor(255, 255, 255);
+	//DrawLine({ 0,0 }, { 256,-256 });
+	LineDraw({ -256,250 }, { 0,0});
 	mDevice_.SwapChain();
 }
 
@@ -80,13 +82,114 @@ VECTOR2D vertices[3] = {
 	{50,25}
 };
 
-void XEngineRenderer::RayFill(VECTOR2D obj)
+void XEngineRenderer::RayFill()
 {
-	int p = obj.y;
+
+	int x0, x1, x2;
+	int y0, y1, y2;
+
+	x0 = vertices[0].x; y0 = vertices[0].y;
+	x1 = vertices[1].x; y1 = vertices[1].y;
+	x2 = vertices[2].x; y2 = vertices[2].y;
+
+	if (y1 < y0) {
+		std::swap(x1, x0);
+		std::swap(y1, y0);
+	}
+	
+	if (y2 < y0) {
+		std::swap(x2, x0);
+		std::swap(y2, y0);
+	}
+
+	if (y2 < y1) {
+		std::swap(x2, y1);
+		std::swap(y2, y1);
+	}
+	
+	float dx1 = 0.0f, dx2 = 0.0f, dx3 = 0.0f;
+
+	if (y1 - y0 > 0) dx1 = (x1 - x0) / (y1 - y0); else dx1 = 0.0f;
+	if (y2 - y0 > 0) dx2 = (x2 - x0) / (y2 - y0); else dx2 = 0.0f;
+	if (y2 - y1 > 0) dx3 = (x2 - x1) / (y2 - y1); else dx3 = 0.0f;
+
+	VECTOR2D S, E;
+
+	S = E = { x0,y0 };
+
+	if (dx1 > dx2) {
+	//	for (; S.y <= y1; S.y++, E.y++, S.x += dx2, E.x += dx1)
+
+	}
+
+	ULONG* dest = (ULONG*)mScreenBits;
+
+	DWORD area = (vertices[0].x*vertices[2].x) * sizeof(ULONG);
+	
+	ULONG value = RGB(255,255, 255);
+
+	while (area--) {
+		*dest++ = value;
+	}
+	return;
+
+}
+
+
+// y = mx+b
+
+void XEngineRenderer::LineDraw(VECTOR2D start, VECTOR2D dest) {
+
+	int W = dest.x - start.x;
+	int H = dest.y - start.y;
+
+	int angle = H / W;
+
+	int x = start.x;
+
+
+	if (W > H) {
+		int y = angle * start.x;
+		for (x = start.x; x < dest.x; ++x) {
+			
+			PixelOut(x, y);
+			
+		}
+	}
+
 
 	
-	
 }
+
+
+bool XEngineRenderer::DrawLine(VECTOR2D start, VECTOR2D dest)
+{
+	int x = start.x;
+	int y = start.y;
+
+	int W = dest.x - start.x;
+	int H = dest.y - start.y;
+
+	int F = 2 * H - W;
+
+	int df1 = 2 * H;
+	int df2 = 2 * (H - W);
+
+	for (x = start.x; x <= dest.x; ++x) {
+		PixelOut(x, y);
+
+		if (F < 0) {
+			F += df1;
+		}
+		else {
+			++y;
+			F += df2;
+		}
+	}
+	return true;
+}
+
+
 
 bool XEngineRenderer::IsInArea(int x, int y)
 {

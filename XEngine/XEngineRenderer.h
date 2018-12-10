@@ -41,9 +41,10 @@ public:
 	void PixelOut(int x, int y);
 	void Clear();
 
-	void RayFill(VECTOR2D obj);
+	void RayFill();
 
-	void DrawLine(PARMLINE2D line_);
+	bool DrawLine(VECTOR2D start, VECTOR2D dest);
+	void LineDraw(VECTOR2D start, VECTOR2D dest);
 	void Draw2DPlane(PLANE2D plane_);
 	void DrawLineByBresenHam(POINT2D from, POINT2D to, COLORREF color);
 
@@ -55,7 +56,7 @@ public:
 	
 
 	void DrawGizmos(AXIS Center);
-
+	
 
 	bool IsInArea(int x, int y);
 

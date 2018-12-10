@@ -13,7 +13,7 @@ private:
 
 	HDC hScreenDC, hMemoryDC;
 	HBITMAP hPrimaryBit, hDIBitmap;
-	
+
 
 public:
 	X3DDevice();
@@ -26,7 +26,8 @@ public:
 
 	void SwapChain();
 	void DrawFrameRate();
-	
+
+	HDC getDC() { return hScreenDC; }
 	
 	~X3DDevice();
 
