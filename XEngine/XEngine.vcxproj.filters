@@ -25,6 +25,9 @@
     <Filter Include="Core">
       <UniqueIdentifier>{5ea7813c-f8b5-4904-b58a-f3b84d87a465}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Renderer\View">
+      <UniqueIdentifier>{456f0080-2dd5-4589-8a86-2dc456d63336}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -51,6 +54,15 @@
     <ClInclude Include="PrimeEngine.h">
       <Filter>Core</Filter>
     </ClInclude>
+    <ClInclude Include="PrimeCamera.h">
+      <Filter>Renderer\View</Filter>
+    </ClInclude>
+    <ClInclude Include="X3DMath.h">
+      <Filter>Definitions</Filter>
+    </ClInclude>
+    <ClInclude Include="TestStar.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -70,6 +82,15 @@
     </ClCompile>
     <ClCompile Include="PrimeEngine.cpp">
       <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="PrimeCamera.cpp">
+      <Filter>Renderer\View</Filter>
+    </ClCompile>
+    <ClCompile Include="X3DMath.cpp">
+      <Filter>Definitions</Filter>
+    </ClCompile>
+    <ClCompile Include="TestStar.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

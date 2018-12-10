@@ -2,8 +2,6 @@
 #include"X3DDevice.h"
 #include"XMath.h"
 #include"PrimeEngine.h"
-#include<queue>
-#include<vector>
 #include<Windows.h>
 
 using namespace std;
@@ -27,9 +25,6 @@ class XEngineRenderer
 private:
 
 	X3DDevice mDevice_;
-
-	queue<PLANE2D> renderQueue_;
-	vector<PLANE2D> renderList_;
 	
 	RECT mRect;
 
@@ -44,8 +39,9 @@ public:
 	void SetColor(BYTE R, BYTE G, BYTE B);
 	
 	void PixelOut(int x, int y);
+	void Clear();
 
-	void RayFill(HWND hWnd, HDC mDC, COLORREF bgColor, POINT2D y);
+	void RayFill(VECTOR2D obj);
 
 	void DrawLine(PARMLINE2D line_);
 	void Draw2DPlane(PLANE2D plane_);
@@ -59,7 +55,6 @@ public:
 	
 
 	void DrawGizmos(AXIS Center);
-	void SwapChain();
 
 
 	bool IsInArea(int x, int y);

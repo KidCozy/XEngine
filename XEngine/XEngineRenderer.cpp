@@ -10,10 +10,6 @@ ULONG mCurrentColor;
 void XEngineRenderer::SetParams() {
 	temp.p0 = { mWidth/2,mHeight/2 };
 
-	// 삼각형 버텍스 정의
-	//tri_.M[0] = { 100,100 };
-	//tri_.M[1] = { 100,150 };
-	//tri_.M[2] = { 150,150 };
 }
 
 void XEngineRenderer::Init(HWND hWnd) {
@@ -31,13 +27,10 @@ void XEngineRenderer::Init(HWND hWnd) {
 // 렌더 구간
 void XEngineRenderer::Render()
 {
-	mDevice_.SetColor(255, 255, 255);
+	mDevice_.SetColor(255, 0, 0);
 
-	for (int i = -mWidth; i < mWidth; i++) {
-		PixelOut(i, 0);
-		PixelOut(0, i);
-	}
-	
+	Clear();
+
 	
 	mDevice_.SwapChain();
 }
@@ -45,6 +38,7 @@ void XEngineRenderer::Render()
 void XEngineRenderer::Release(HWND hWnd)
 {
 	mDevice_.Release(hWnd);
+	mDevice_.~X3DDevice();
 	this->~XEngineRenderer();
 }
 
@@ -55,6 +49,43 @@ void XEngineRenderer::PixelOut(int x, int y)
 	ULONG* dest = (ULONG*)mScreenBits;
 	DWORD offset = mWidth * mHeight / 2 + mWidth / 2 + x + mWidth * -y;
 	*(dest + offset) = mCurrentColor;
+}
+
+void XEngineRenderer::Clear()
+{
+	/*int x = -mWidth / 2, y = -mHeight / 2;
+	mDevice_.SetColor(255, 0, 0);
+	for (int i = x; i < 256; i++) {
+		for (int j = y; j < 256; j++) {
+			PixelOut(i, j);
+		}
+	}*/
+//	mDevice_.SetColor(255, 255, 255);
+	ULONG* dest = (ULONG*)mScreenBits;
+	DWORD area = (mWidth * mHeight) * sizeof(ULONG);
+
+	ULONG value = mCurrentColor;
+
+	area /= 4;
+
+	while (area--) {
+		*dest++ = value;
+	}
+	return;
+}
+
+VECTOR2D vertices[3] = {
+	{25,25},
+	{25,50},
+	{50,25}
+};
+
+void XEngineRenderer::RayFill(VECTOR2D obj)
+{
+	int p = obj.y;
+
+	
+	
 }
 
 bool XEngineRenderer::IsInArea(int x, int y)

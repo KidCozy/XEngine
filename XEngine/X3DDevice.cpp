@@ -47,15 +47,19 @@ void X3DDevice::Release(HWND hWnd) {
 
 void X3DDevice::SetColor(BYTE R, BYTE G, BYTE B)
 {
-	mCurrentColor = RGB(R, G, B);
+	mCurrentColor = RGB(B, G, R);
 }
 
 
-void X3DDevice::Clear()
-{
-}
 
 void X3DDevice::SwapChain() {
+
+	HDC tempDC;
+
+	//tempDC = hScreenDC;
+	//hScreenDC = hMemoryDC;
+//	hMemoryDC = hScreenDC;
+
 	BitBlt(hScreenDC, 0, 0, mWidth, mHeight, hMemoryDC, 0, 0, SRCCOPY);
 }
 

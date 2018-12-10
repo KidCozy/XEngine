@@ -24,7 +24,6 @@ public:
 
 	void SetColor(BYTE R, BYTE G, BYTE B);
 
-	void Clear();
 	void SwapChain();
 	void DrawFrameRate();
 	
