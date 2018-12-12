@@ -7,6 +7,8 @@ using namespace align;
 
 ULONG mCurrentColor;
 
+TestStar* star = new TestStar[1024];
+
 void XEngineRenderer::SetParams() {
 	temp.p0 = { mWidth/2,mHeight/2 };
 
@@ -31,9 +33,13 @@ void XEngineRenderer::Render()
 
 	Clear();
 	//RayFill();
+//	DrawStar(star);
 	mDevice_.SetColor(255, 255, 255);
-	//DrawLine({ 0,0 }, { 256,-256 });
-	LineDraw({ -256,250 }, { 0,0});
+	//DrawLine({ 0,0 }, { 256,256 });
+	Line({ 0,0 }, { -100,100 });
+	ShowPoints({ 0,0 });
+	ShowPoints({50, 100});
+	//LineDraw({ 0,0}, { 256,255});
 	mDevice_.SwapChain();
 }
 
@@ -135,6 +141,15 @@ void XEngineRenderer::RayFill()
 
 }
 
+void XEngineRenderer::DrawStar(TestStar* star)
+{
+	for (int i = 0; i < 1024; i++) {
+		//star[i].mPos = star[i].mPos * ;
+
+		PixelOut(star[i].mPos.x, star[i].mPos.y);
+	}
+}
+
 
 // y = mx+b
 
@@ -161,6 +176,46 @@ void XEngineRenderer::LineDraw(VECTOR2D start, VECTOR2D dest) {
 	
 }
 
+void XEngineRenderer::Line(VECTOR2D start, VECTOR2D dest) {
+
+	int x0, x1;
+	int y0, y1;
+
+	int W, H;
+
+	x0 = start.x;
+	x1 = dest.x;
+
+	y0 = start.y;
+	y1 = dest.y;
+
+	W = x1 - x0;
+	H = y1 - y0;
+
+	if (W < 0 || H < 0)					// 시작점과 끝점의 위치를 바꾼다.
+	{
+		cout << "SWAP" << endl;
+		std::swap(start, dest);
+	}
+
+	if (abs(W) > abs(H)) {						// X 변화량이 큰 경우
+		int y = 0;
+		for (int x = start.x; x < dest.x; x++) {
+			y = (H / W) * x;
+			PixelOut(x, y);
+		}
+	}
+
+	else {								// Y 변화량이 큰 경우
+		int x = 0;
+		for (int y = start.y; y < dest.y; y++) {
+			x = (H / W) * y;
+			PixelOut(x, y);
+		}
+	}
+
+
+}
 
 bool XEngineRenderer::DrawLine(VECTOR2D start, VECTOR2D dest)
 {

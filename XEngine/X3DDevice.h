@@ -27,7 +27,7 @@ public:
 	void SwapChain();
 	void DrawFrameRate();
 
-	HDC getDC() { return hScreenDC; }
+	HDC PeekDC() { return hMemoryDC; }
 	
 	~X3DDevice();
 

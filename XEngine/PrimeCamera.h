@@ -4,11 +4,13 @@ class PrimeCamera
 {
 private:
 	MATRIX mMat;
-	
+	float mFov;
 
 public:
+	void LookPosition();
+	void SetFov();
 	void TransformInMatrix();
-	void Resterize();
+	void Rasterize();
 
 	PrimeCamera();
 	~PrimeCamera();

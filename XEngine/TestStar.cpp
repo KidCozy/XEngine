@@ -4,7 +4,7 @@
 
 TestStar::TestStar()
 {
-	mPos = VECTOR3D();
+	mPos = VECTOR4D();
 	for (int i = 0; i < 3; i++) {
 		mPos.M[i] = rand() % 512;
 	}

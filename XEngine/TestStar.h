@@ -2,8 +2,9 @@
 #include"XMath.h"
 class TestStar
 {
-	VECTOR3D mPos;
+	
 public:
+	VECTOR4D mPos;
 	void Render();
 
 	TestStar();

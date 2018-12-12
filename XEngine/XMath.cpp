@@ -2,9 +2,10 @@
 
 using namespace std;
 
+
 #define WORLDMAT CMWorldMatrix
 #define PROJECTIONMAT CMProjectionMatrix
-
+//------------------------------------------------------------//
 MATRIX CMWorldMatrix = {
 	1,0,0,0,
 	0,1,0,0,
@@ -18,6 +19,7 @@ MATRIX CMProjectionMatrix = {
 	0,0,0,0,
 	0,0,0,0,
 };
+
 
 MATRIX_TYP operator*(MATRIX_TYP p1, VECTOR4D p2) {
 	MATRIX_TYP retVal;
@@ -83,6 +85,9 @@ MATRIX LocalToWorldMatrix(MATRIX local_)
 	return world_;
 	
 }
+
+
+
 
 void Translate(LPTRANSFORM target, VECTOR3D offset_) {
 	

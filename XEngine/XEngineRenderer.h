@@ -1,7 +1,9 @@
 #pragma once
 #include"X3DDevice.h"
 #include"XMath.h"
+#include"PrimeCamera.h"
 #include"PrimeEngine.h"
+#include"TestStar.h"
 #include<Windows.h>
 
 using namespace std;
@@ -43,10 +45,24 @@ public:
 
 	void RayFill();
 
+	void DrawStar(TestStar* star);
+
+	
+	void Line(VECTOR2D start, VECTOR2D dest);
 	bool DrawLine(VECTOR2D start, VECTOR2D dest);
 	void LineDraw(VECTOR2D start, VECTOR2D dest);
 	void Draw2DPlane(PLANE2D plane_);
 	void DrawLineByBresenHam(POINT2D from, POINT2D to, COLORREF color);
+
+	void ShowPoints(VECTOR2D pnt) {
+
+		wchar_t wszText[512] = { 0 };
+		swprintf(wszText, 512, L"(%.2f, %.2f)", pnt.x, pnt.y);
+		::TextOut(mDevice_.PeekDC(), pnt.x+(mWidth/2), pnt.y+(mHeight/2), wszText, wcslen(wszText));
+
+
+	}
+
 
 	void Draw2DSquare(SQUARE2D sqr_);
 
