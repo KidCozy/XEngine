@@ -57,10 +57,14 @@ public:
 	void ShowPoints(VECTOR2D pnt) {
 
 		wchar_t wszText[512] = { 0 };
-		swprintf(wszText, 512, L"(%.2f, %.2f)", pnt.x, pnt.y);
-		::TextOut(mDevice_.PeekDC(), pnt.x+(mWidth/2), pnt.y+(mHeight/2), wszText, wcslen(wszText));
+		swprintf(wszText, 512, L"(%d, %d)", pnt.x, pnt.y);
+		::TextOut(mDevice_.PeekDC(), pnt.x+(mWidth/2), (-pnt.y+(mHeight/2)), wszText, wcslen(wszText));
+	}
 
-
+	void ShowCurrentPoints(VECTOR2D pnt, int offset, const wchar_t* descrpt) {
+		wchar_t wszText[512] = { 0 };
+		swprintf(wszText, 512, L"%s : (%d, %d)", descrpt ,pnt.x, pnt.y);
+		::TextOut(mDevice_.PeekDC(), 0, 0+offset, wszText, wcslen(wszText));
 	}
 
 

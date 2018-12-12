@@ -26,20 +26,36 @@ void XEngineRenderer::Init(HWND hWnd) {
 }
 
 
+VECTOR2D start = { 0,0 };
+VECTOR2D mDest;
+
+VECTOR2D start2 = { 127,32 };
+VECTOR2D dest2 = { 73,-22 };
+
 // 렌더 구간
 void XEngineRenderer::Render()
 {
-	mDevice_.SetColor(255, 0, 0);
+	mDevice_.SetColor(0, 255, 255);
 
 	Clear();
 	//RayFill();
 //	DrawStar(star);
-	mDevice_.SetColor(255, 255, 255);
+	mDevice_.SetColor(0, 0, 0);
 	//DrawLine({ 0,0 }, { 256,256 });
-	Line({ 0,0 }, { -100,100 });
-	ShowPoints({ 0,0 });
-	ShowPoints({50, 100});
-	//LineDraw({ 0,0}, { 256,255});
+	ShowPoints(start);
+	ShowPoints(mDest);
+
+
+	Line(start , mDest);
+
+	mDevice_.SetColor(255, 0, 0);
+	PixelOut(mDest.x, mDest.y);
+//	Line(start2, dest2);
+
+
+//	ShowPoints(start2);
+//	ShowPoints(dest2);
+
 	mDevice_.SwapChain();
 }
 
@@ -181,7 +197,9 @@ void XEngineRenderer::Line(VECTOR2D start, VECTOR2D dest) {
 	int x0, x1;
 	int y0, y1;
 
-	int W, H;
+	VECTOR2D swStart, swDest;
+
+	float W, H;
 
 	x0 = start.x;
 	x1 = dest.x;
@@ -192,26 +210,78 @@ void XEngineRenderer::Line(VECTOR2D start, VECTOR2D dest) {
 	W = x1 - x0;
 	H = y1 - y0;
 
-	if (W < 0 || H < 0)					// 시작점과 끝점의 위치를 바꾼다.
-	{
-		cout << "SWAP" << endl;
+	float Slope = H / W;
+
+	
+
+	if (W < 0 || H < 0 && false) {				// 시작점과 끝점의 위치를 바꾼다. (start와 dest가 뒤집어진 경우)
+	
+		
 		std::swap(start, dest);
 	}
 
-	if (abs(W) > abs(H)) {						// X 변화량이 큰 경우
+	ShowCurrentPoints(start,0,L"start");
+	ShowCurrentPoints(dest,20,L"dest");
+
+	if (Slope >= 0 && Slope <= 1) {						// X 변화량이 큰 경우 // 1사이 인경우 (x변화량이 클때)
+		
+		cout << "X" << endl;
+		int x = 0;
 		int y = 0;
-		for (int x = start.x; x < dest.x; x++) {
-			y = (H / W) * x;
-			PixelOut(x, y);
+
+		if (dest.x == 0) {
+			for (int y = start.y; y < dest.y; y++) {
+				x = Slope * y;
+				PixelOut(x, y);
+			}
 		}
+
+		if (W > H) { //x 변화량이 y 변화량보다 큰경우
+			for (int x = start.x; x < dest.x; x++) {
+				y = Slope * x;
+				PixelOut(x, y);
+		//		cout << x << ", " << y << endl;
+
+			}
+		}
+		else {
+			for (int y = start.y; x < dest.y; y++) {
+				x = Slope * y;
+				PixelOut(x, y);
+			}
+		}
+
+
 	}
 
-	else {								// Y 변화량이 큰 경우
+	else {								// Y 변화량이 큰 경우 // 기울기가 1보다 작은경우
+		int y = 0;
 		int x = 0;
-		for (int y = start.y; y < dest.y; y++) {
-			x = (H / W) * y;
-			PixelOut(x, y);
+
+		if (Slope == INFINITY) {
+			cout << "MIDDLE" << endl;
+			for (int y = start.y; y < dest.y; y++) {
+				PixelOut(0, y);
+			}
 		}
+
+		if (W < H) {
+			for (int x = start.x; x < dest.x; x++) {
+				y = Slope * x;
+				PixelOut(x, y);
+		//		cout << x << ", " << y << endl;
+
+			}
+		}
+		
+		else {
+			for (int y = start.y; x < dest.y; y++) {
+				x = Slope * y;
+				PixelOut(x, y);
+			}
+		}
+	
+
 	}
 
 
